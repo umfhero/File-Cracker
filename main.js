@@ -10,22 +10,6 @@ let pythonLauncher = null
 function resolvePythonLauncher () {
   if (pythonLauncher) return pythonLauncher
 
-  const venvPython = process.platform === 'win32'
-    ? path.join(__dirname, '.venv', 'Scripts', 'python.exe')
-    : path.join(__dirname, '.venv', 'bin', 'python')
-
-  if (fs.existsSync(venvPython)) {
-    const checkVenv = spawnSync(venvPython, ['--version'], {
-      encoding: 'utf8',
-      windowsHide: true
-    })
-
-    if (!checkVenv.error && checkVenv.status === 0) {
-      pythonLauncher = { command: venvPython, args: [] }
-      return pythonLauncher
-    }
-  }
-
   const candidates = process.platform === 'win32'
     ? [
         { command: 'py', args: ['-3'] },

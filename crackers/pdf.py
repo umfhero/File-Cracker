@@ -15,10 +15,14 @@ Output protocol (same for all crackers):
 import argparse
 import sys
 
-import pikepdf
+# TODO: import pikepdf
 
 
 def crack(file_path: str, wordlist_path: str) -> None:
+    # TODO: open the PDF with pikepdf
+    #   pdf = pikepdf.open(file_path, password=password)
+    #   If it opens without raising pikepdf.PasswordError, the password is correct.
+
     try:
         with open(wordlist_path, "r", encoding="latin-1") as f:
             passwords = [line.rstrip("\n") for line in f]
@@ -26,37 +30,21 @@ def crack(file_path: str, wordlist_path: str) -> None:
         print(f"ERROR:Wordlist not found: {wordlist_path}")
         sys.exit(1)
 
-    try:
-        with pikepdf.open(file_path):
-            print("SUCCESS:", flush=True)
-            sys.exit(0)
-    except FileNotFoundError:
-        print(f"ERROR:PDF not found: {file_path}", flush=True)
-        sys.exit(1)
-    except pikepdf.PasswordError:
-        pass
-    except Exception as exc:
-        print(f"ERROR:{exc}", flush=True)
-        sys.exit(1)
-
     total = len(passwords)
 
-    for i, password in enumerate(passwords, start=1):
+    for i, password in enumerate(passwords):
         if i % 200 == 0:
             print(f"PROGRESS:{i}/{total}", flush=True)
 
-        try:
-            with pikepdf.open(file_path, password=password):
-                print(f"SUCCESS:{password}", flush=True)
-                sys.exit(0)
-        except pikepdf.PasswordError:
-            continue
-        except Exception as exc:
-            print(f"ERROR:{exc}", flush=True)
-            sys.exit(1)
+        # TODO: replace this block with your pikepdf attempt
+        # try:
+        #     with pikepdf.open(file_path, password=password):
+        #         print(f"SUCCESS:{password}", flush=True)
+        #         sys.exit(0)
+        # except pikepdf.PasswordError:
+        #     continue
 
-    if total and total % 200 != 0:
-        print(f"PROGRESS:{total}/{total}", flush=True)
+        pass  # remove this once implemented
 
     print("FAILED", flush=True)
     sys.exit(0)

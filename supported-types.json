@@ -15,7 +15,7 @@
     "extension": "docx",
     "label": "Word Document",
     "cracker": "docx",
-    "status": "stub"
+    "status": "working"
   },
   {
     "extension": "xlsx",
